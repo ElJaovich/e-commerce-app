@@ -1,37 +1,37 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import { getProducts } from "../services/ProductService";
-import { Product } from "../components/Product";
+import {View, Text, FlatList, StyleSheet} from "react-native";
+import { getProducts } from "../services/ProductsService";
+import {Product} from "../components/Product";
 
-export function ProductList(){
+export function ProductsList({navigation}){
 
     function renderProduct({item: product}){
-
-        return (
-            <Product
+        return(
+            <Product 
                 {...product}
-                OnPress={()=> {
+                onPress={() => {
                     navigation.navigate('ProductDetails', {productId: product.id})
                 }}
             />
         )
     }
+
     const [products, setProducts] = useState([]);
 
-    useEffect(()=> {
+    useEffect(() => {
         setProducts(getProducts())
     })
 
     return(
-        <FlatList
-            style={styles.productList}
+        <FlatList 
+            style={styles.productsList}
             contentContainerStyle={styles.productsListContainer}
-            keyExtractor={(item)=> item.id.toString()}
+            keyExtractor={(item) => item.id.toString()}
             data={products}
-            renderItem= { renderProduct}
-            
+            renderItem={renderProduct}
         />
     )
+
 }
 
 const styles = StyleSheet.create({
@@ -44,3 +44,4 @@ const styles = StyleSheet.create({
       marginHorizontal: 8,
     },
   });
+  
